@@ -4,7 +4,6 @@ import 'boxicons/css/boxicons.min.css';
 
 const UpdateCard = ({ setIsPopupOpen, lists, setLists, cardINDEX, listIndex }) => {
     const [cardDetails, setCardDetails] = useState([]);
-    const [dateForComparison, setDateForComparison] = useState(null);
 
     useEffect(() => {
         const card = new Array(3);
@@ -15,21 +14,17 @@ const UpdateCard = ({ setIsPopupOpen, lists, setLists, cardINDEX, listIndex }) =
         setCardDetails(card);
     }, [lists, listIndex, cardINDEX]);
 
-    const handleDeleteCard = () =>{
+    const handleKeyPress = (e) => {
+        // Check if the Enter key (key code 13) is pressed
+        if (e.key === 'Enter') {
+          handleUpdateCardDetails(); // Trigger the button click handler
+        }
+      };
+    const handleDeleteCard = () => {
         const updatedLists = [...lists];
-        updatedLists[listIndex].cards.splice(cardINDEX,1);
+        updatedLists[listIndex].cards.splice(cardINDEX, 1);
         setLists(updatedLists);
         setIsPopupOpen(false);
-    }
-    const formatToDisplay = (dateString) => {
-        if (!dateString) return ""; // Return empty if dateString is invalid
-        const date = new Date(dateString);
-        if (isNaN(date)) return ""; // Handle invalid date
-        return date.toLocaleDateString("en-US", {
-            month: "short",
-            day: "numeric",
-            year: "numeric",
-        }); // "Feb 2, 2024"
     };
 
     const handleUpdateCardDetails = () => {
@@ -38,6 +33,20 @@ const UpdateCard = ({ setIsPopupOpen, lists, setLists, cardINDEX, listIndex }) =
         setLists(updatedLists);
         setCardDetails(null);
         setIsPopupOpen(false);
+    };
+
+    const formatDateForInput = (dateString) => {
+        if (!dateString) return "";
+        const date = new Date(dateString);
+        const localDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000); // Adjust for local time zone
+        return localDate.toISOString().split("T")[0]; // Return in "YYYY-MM-DD" format for input
+    };
+
+    const formatDateForDisplay = (dateString) => {
+        if (!dateString) return "";
+        const date = new Date(dateString);
+        const options = { year: 'numeric', month: 'short', day: 'numeric' }; // "Aug 20, 2024"
+        return date.toLocaleDateString("en-US", options);
     };
 
     return (
@@ -61,7 +70,6 @@ const UpdateCard = ({ setIsPopupOpen, lists, setLists, cardINDEX, listIndex }) =
                     <div>
                         <label className="block text-sm font-medium mb-1">Description</label>
                         <textarea
-                            type="text"
                             value={cardDetails[1]}
                             onChange={(e) => {
                                 const description = e.target.value;
@@ -76,24 +84,31 @@ const UpdateCard = ({ setIsPopupOpen, lists, setLists, cardINDEX, listIndex }) =
                         <label className="block text-sm font-medium mb-1">Due Date</label>
                         <input
                             type="date"
-                            value={dateForComparison ? dateForComparison.toISOString().split("T")[0] : ""}
+                            onKeyDown={handleKeyPress}
+                            value={formatDateForInput(cardDetails[2])} // Format for input field (YYYY-MM-DD)
                             onChange={(e) => {
                                 const rawDate = e.target.value;
-                                const formattedDate = formatToDisplay(rawDate);
-                                setDateForComparison(new Date(rawDate));
+                                const formattedDate = formatDateForDisplay(rawDate); // Format as "Aug 20, 2024"
                                 const updatedDetails = [...cardDetails];
-                                updatedDetails[2] = formattedDate;
+                                updatedDetails[2] = formattedDate; // Store formatted date
                                 setCardDetails(updatedDetails);
                             }}
                             className="border border-gray-400 p-2 rounded text-sm w-full"
                         />
+                       
                     </div>
                     <div className="flex justify-between gap-4">
-                        <div>
-                            <button onClick={handleUpdateCardDetails} className="rounded-lg bg-blue-600 text-sm px-4 text-white p-2">Save</button>
-                            <button onClick={() => setIsPopupOpen(false)} className="rounded-lg bg-zinc-200 text-sm px-4 p-2">Cancel</button>
+                        <div className="flex gap-3">
+                            <button  onClick={handleUpdateCardDetails} className="rounded-lg bg-blue-600 text-sm px-4 text-white p-2 hover:bg-blue-800">
+                                Save
+                            </button>
+                            <button onClick={() => setIsPopupOpen(false)} className="rounded-lg bg-zinc-200 hover:bg-zinc-400 text-sm px-4 p-2">
+                                Cancel
+                            </button>
                         </div>
-                        <button onClick={handleDeleteCard}>Delete Card</button>
+                        <button onClick={handleDeleteCard} className="rounded-lg bg-red-200 text-sm px-4 text-red-800 hover:bg-red-800 hover:bg-opacity-30 p-2">
+                            Delete Card
+                        </button>
                     </div>
                 </div>
             </div>

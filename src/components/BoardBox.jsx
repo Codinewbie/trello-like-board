@@ -230,6 +230,7 @@ import "boxicons/css/boxicons.min.css";
 import NewListOrAddingList from "./NewListOrAddingList";
 import AddACard from "./AddACard";
 import UpdateCard from "./UpdateCard";
+import Card from "./Card";
 
 const BoardBox = ({ lists, setLists }) => {
   const [editIndex, setEditIndex] = useState(null);
@@ -240,12 +241,12 @@ const BoardBox = ({ lists, setLists }) => {
 
   const cardsRefs = useRef([]);
 
-  const handleEditCard = ({ cardIndex, index }) => {
-    setCardINDEX(cardIndex);
-    setListIndex(index);
-    setIsPopupOpen(true);
+  const handleEditCard = ({  index, listIndex }) => {
+    setCardINDEX(index);
+    setListIndex(listIndex);
+    console.log(index,listIndex);
+    setIsPopupOpen(true); 
   };
-
   const handleClosePopup = () => {
     setCardINDEX(null);
     setListIndex(null);
@@ -270,6 +271,12 @@ const BoardBox = ({ lists, setLists }) => {
     setEditIndex(null);
     setEditedListName("");
   };
+  const handleKeyPress = (e , index) => {
+    // Check if the Enter key (key code 13) is pressed
+    if (e.key === 'Enter') {
+      saveEditedListName(index); // Trigger the button click handler
+    }
+  };
 
   const getDueStatus = (dueDate) => {
     const today = new Date();
@@ -293,22 +300,23 @@ const BoardBox = ({ lists, setLists }) => {
         ></div>
       )}
       <div
-        className={`h-full w-full border rounded-md ${
+        className={`h-full w-full  rounded-md ${
           isPopupOpen ? "opacity-20" : "opacity-100"
         } transition-opacity duration-300`}
       >
-        <div className="flex flex-cols gap-6 m-4 overflow-x-auto border pb-20 flex-nowrap items-start">
+        <div className="flex flex-cols gap-6 m-4 overflow-x-auto overflow-hidden scrollbar-hide  flex-nowrap items-start">
           {lists.map((list, index) => (
             <div
               key={index}
-              className="rounded-xl w-72 bg-zinc-200 border p-4 flex-shrink-0"
+              className="rounded-xl w-72 bg-zinc-200 border flex-shrink-0"
             >
-              <div className="flex items-center w-full">
-                <div className="flex justify-between px-3 w-full gap-3 mr-3">
+              <div className="flex items-center w-full px-4 pt-4">
+                <div className="flex justify-between pr-3 pl-1 w-full gap-3 ">
                   {editIndex === index ? (
                     <input
                       type="text"
                       value={editedListName}
+                      onKeyDown={(e) => handleKeyPress(e,index)}
                       onChange={(e) => setEditedListName(e.target.value)}
                       className="border border-gray-400 p-2 rounded text-sm w-full"
                     />
@@ -347,72 +355,26 @@ const BoardBox = ({ lists, setLists }) => {
                 </button>
               </div>
               <div
-                className="flex flex-col gap-2 mt-4 max-h-72 overflow-y-auto overflow-hidden scrollbar-hide"
+                className="flex flex-col gap-2 mt-4 px-2 max-h-[calc(100vh-270px)] overflow-y-auto custom-scrollbar"
                 ref={(el) => (cardsRefs.current[index] = el)}
                 id="cards"
               >
                 {list.cards.map((card, cardIndex) => {
-                  const isOverdue = getDueStatus(card[2]); // Check if the card is overdue
-
+                  let isOverdue = false;
+                  if(card[2]!="" || card[2]!=null){
+                   isOverdue = getDueStatus(card[2]); // Check if the card is overdue
+                  }
                   return (
-                    <button
-                      key={cardIndex}
-                      onClick={() => handleEditCard({ cardIndex, index })}
-                      className="border-2 border-transparent p-2 text-sm text-left shadow-md rounded-lg bg-gray-100 hover:border-blue-500"
-                    >
-                      <div className="">{card[0]}</div>
-                      {(card[2] != null || card[1] != null) && (
-                        <div className="flex gap-2 mt-1 items-center">
-                          {card[2] !== "" && (
-                            <div
-                              className={`flex gap-1 items-center rounded-sm justify-center px-[5px] ${
-                                isOverdue
-                                  ? "bg-red-200 hover:bg-opacity-40 hover:bg-red-900"
-                                  : ""
-                              }`}
-                              title={` ${
-                                isOverdue
-                                  ? "This card is past due."
-                                  : "This card is due later."
-                              }`}
-                            >
-                              <div className="pb-[1px] ">
-                                <box-icon
-                                  name="alarm"
-                                  color={isOverdue ? "brown" : "#737171"}
-                                  size="xs"
-                                ></box-icon>
-                              </div>
-                              <div
-                                className={`text-xs ${
-                                  isOverdue
-                                    ? "text-red-700"
-                                    : "text-zinc-800"
-                                }`}
-                              >
-                                {card[2]}
-                              </div>
-                            </div>
-                          )}
-
-                          {card[1] !== "" && (
-                            <button
-                              className="pb-[0.5px]"
-                              onClick={() =>
-                                handleEditCard({ cardIndex, index })
-                              }
-                              title="This card has a description"
-                            >
-                              <box-icon
-                                name="detail"
-                                color="#737171"
-                                size="xs"
-                              ></box-icon>
-                            </button>
-                          )}
-                        </div>
-                      )}
-                    </button>
+                      <Card
+                            isOverdue={isOverdue}
+                            key={cardIndex}
+                            index={cardIndex}
+                            listIndex={index}
+                            card={card}
+                            handleEditCard={handleEditCard}
+                            lists = {lists}
+                            setLists = {setLists}
+                      />
                   );
                 })}
               </div>

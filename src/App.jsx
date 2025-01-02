@@ -5,6 +5,7 @@ import "./index.css";
 import bg4 from "/src/images/bg4.jpg";
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import Footer from "./components/Footer";
 
 function App() {
     const [lists, setLists] = useState([]);
@@ -29,8 +30,9 @@ function App() {
             >
                 <Header setLists={setLists} />
                 <BoardBox lists={lists} setLists={setLists} />
+                <Footer/>
             </div>
-            </DndProvider>
+        </DndProvider>
     );
 }
 
