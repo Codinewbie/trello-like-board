@@ -1,6 +1,7 @@
 import React from 'react';
 import 'boxicons';
 import 'boxicons/css/boxicons.min.css';
+import aman2 from "/src/images/aman2.jpg";
 
 
 const Header = ({setLists}) => {
@@ -21,9 +22,9 @@ const Header = ({setLists}) => {
               Reset Board
           </button>
           <a className="flex justify-start items-center space-x-2 p-1  " href="https://codinewbie.github.io/portfolio/" title="portfolio" target="_blank" rel="noopener noreferrer">
-              <div className="h-8 w-8 bg-gray-100 absolute   text-center flex justify-center  items-center rounded-full z-20 ">
+              <div className="h-8 w-8 bg-gray-100 absolute   text-center flex justify-center  items-center rounded-full z-20 " >
                       <img
-                          src="/src/images/aman2.jpg" // Path relative to the public folder
+                          src={aman2} // Path relative to the public folder
                           alt="aman image"
                           className="object-cover rounded-full grayscale"
                       />
