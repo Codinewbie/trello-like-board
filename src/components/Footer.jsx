@@ -5,7 +5,7 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <div className="border-t mt-20 flex justify-center px-7 hover:bg-black hover:bg-opacity-20">
+    <div className="border-t mt-24 flex justify-center px-7 hover:bg-black hover:bg-opacity-20">
       <div className="max-w-4xl text-white py-8 flex justify-between w-full gap-8 md:gap-14 items-center flex-col md:flex-row">
         {/* Copyright Section */}
         <p className="md:text-lg font-bold text-center">
