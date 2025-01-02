@@ -25,11 +25,13 @@ function App() {
     return (
       <DndProvider backend={HTML5Backend}>
             <div
-                className="bg-red-200 text-xl min-h-screen bg-center bg-cover"
+                className="bg-red-200 text-xl min-h-screen  bg-center bg-cover"
                 style={{ backgroundImage: `url(${bg4})` }}
             >
                 <Header setLists={setLists} />
-                <BoardBox lists={lists} setLists={setLists} />
+                <div className = "  min-h-[calc(100vh-150px)]">
+                    <BoardBox lists={lists} setLists={setLists} />
+                </div>
                 <Footer/>
             </div>
         </DndProvider>
