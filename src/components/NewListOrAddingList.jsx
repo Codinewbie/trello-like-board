@@ -21,7 +21,12 @@ const NewListOrAddingList = ({lists ,setLists}) => {
         setNewListName('');
         setIsAddingList(false); // Hide the input field and reset
     };
-    
+    const handleKeyPress = (e ) => {
+      // Check if the Enter key (key code 13) is pressed
+      if (e.key === 'Enter') {
+        handleSaveList(); // Trigger the button click handler
+      }
+    };
 
   return (  
     <React.Fragment>
@@ -38,6 +43,7 @@ const NewListOrAddingList = ({lists ,setLists}) => {
             <input
               type="text"
               value={newListName}
+              onKeyDown={handleKeyPress}
               onChange={(e) => setNewListName(e.target.value)}
               placeholder="Enter list name"
               className="border  border-gray-400 p-2 w-full rounded text-sm focus:outline-blue-600"

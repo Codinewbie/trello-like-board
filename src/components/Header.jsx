@@ -29,7 +29,7 @@ const Header = ({setLists}) => {
                           className="object-cover rounded-full grayscale"
                       />
               </div>
-              <div className="hidden sm:block flex flex-col rounded-md relative bg-white  bg-opacity-40 hover:bg-opacity-20 text-[10px] pl-7 px-2 py-[1px] pb-[2px] text-zinc-900 font-semibold items-center justify-center ">
+              <div className="hidden sm:block flex flex-col rounded-2xl relative bg-white  bg-opacity-40 hover:bg-opacity-20 text-[10px] pl-7 px-2 py-[1px] pb-[2px] text-zinc-900 font-semibold items-center justify-center ">
                 Aman Kumar
               </div>
           </a>
