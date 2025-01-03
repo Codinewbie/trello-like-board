@@ -7,7 +7,7 @@ const UpdateCard = ({ setIsPopupOpen, lists, setLists, cardINDEX, listIndex }) =
 
     useEffect(() => {
         const card = new Array(3);
-        console.log(listIndex, cardINDEX); // Output 2 undefined means cardINDEX is showing error
+        console.log(listIndex, cardINDEX); 
         card[0] = lists[listIndex]?.cards?.[cardINDEX]?.[0] || "";
         card[1] = lists[listIndex]?.cards?.[cardINDEX]?.[1] || "";
         card[2] = lists[listIndex]?.cards?.[cardINDEX]?.[2] || "";
@@ -15,9 +15,9 @@ const UpdateCard = ({ setIsPopupOpen, lists, setLists, cardINDEX, listIndex }) =
     }, [lists, listIndex, cardINDEX]);
 
     const handleKeyPress = (e) => {
-        // Check if the Enter key (key code 13) is pressed
+        
         if (e.key === 'Enter') {
-          handleUpdateCardDetails(); // Trigger the button click handler
+          handleUpdateCardDetails(); 
         }
       };
     const handleDeleteCard = () => {
@@ -38,14 +38,14 @@ const UpdateCard = ({ setIsPopupOpen, lists, setLists, cardINDEX, listIndex }) =
     const formatDateForInput = (dateString) => {
         if (!dateString) return "";
         const date = new Date(dateString);
-        const localDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000); // Adjust for local time zone
-        return localDate.toISOString().split("T")[0]; // Return in "YYYY-MM-DD" format for input
+        const localDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000); 
+        return localDate.toISOString().split("T")[0]; 
     };
 
     const formatDateForDisplay = (dateString) => {
         if (!dateString) return "";
         const date = new Date(dateString);
-        const options = { year: 'numeric', month: 'short', day: 'numeric' }; // "Aug 20, 2024"
+        const options = { year: 'numeric', month: 'short', day: 'numeric' };
         return date.toLocaleDateString("en-US", options);
     };
 
@@ -85,12 +85,12 @@ const UpdateCard = ({ setIsPopupOpen, lists, setLists, cardINDEX, listIndex }) =
                         <input
                             type="date"
                             onKeyDown={handleKeyPress}
-                            value={formatDateForInput(cardDetails[2])} // Format for input field (YYYY-MM-DD)
+                            value={formatDateForInput(cardDetails[2])} 
                             onChange={(e) => {
                                 const rawDate = e.target.value;
-                                const formattedDate = formatDateForDisplay(rawDate); // Format as "Aug 20, 2024"
+                                const formattedDate = formatDateForDisplay(rawDate); 
                                 const updatedDetails = [...cardDetails];
-                                updatedDetails[2] = formattedDate; // Store formatted date
+                                updatedDetails[2] = formattedDate; 
                                 setCardDetails(updatedDetails);
                             }}
                             className="border border-gray-400 p-2 rounded text-sm w-full"

@@ -1,5 +1,4 @@
 import React from 'react';
-import 'boxicons/css/boxicons.min.css';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -7,12 +6,9 @@ const Footer = () => {
   return (
     <div className="border-t mt-24  flex justify-center px-7 hover:bg-black hover:bg-opacity-20">
       <div className="max-w-4xl text-white py-8 flex justify-between w-full gap-8 md:gap-14 items-center flex-col md:flex-row">
-        {/* Copyright Section */}
         <p className="md:text-lg font-bold text-center">
           Copyright © {currentYear}. All rights reserved.
         </p>
-
-        {/* Social Media Links */}
         <div className="flex items-center gap-5 text-4xl">
           <a
             href="https://github.com/Codinewbie"

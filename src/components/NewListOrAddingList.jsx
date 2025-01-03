@@ -5,26 +5,25 @@ import { RxCross2 } from "react-icons/rx";
 
 const NewListOrAddingList = ({lists ,setLists}) => {
     const [isAddingList, setIsAddingList] = useState(false);
-    const [newListName, setNewListName] = useState(''); // Store the input for the new list
+    const [newListName, setNewListName] = useState(''); 
 
     const handleAddListClick = () => {
-        setIsAddingList(true); // Show input field when "Add a list" is clicked
+        setIsAddingList(true); 
     };
     const handleSaveList = () => {
         if (newListName.trim() !== '') {
-          setLists([...lists, { name: newListName, cards: [] }]); // Add new list to the lists array
+          setLists([...lists, { name: newListName, cards: [] }]); 
           setNewListName('');
           setIsAddingList(false);
         }
       };
     const handleCancel = () => {
         setNewListName('');
-        setIsAddingList(false); // Hide the input field and reset
+        setIsAddingList(false); 
     };
     const handleKeyPress = (e ) => {
-      // Check if the Enter key (key code 13) is pressed
       if (e.key === 'Enter') {
-        handleSaveList(); // Trigger the button click handler
+        handleSaveList(); 
       }
     };
 

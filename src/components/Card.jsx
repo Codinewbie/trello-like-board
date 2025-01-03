@@ -1,5 +1,7 @@
 import React from 'react';
 import { useDrag, useDrop } from 'react-dnd';
+import "boxicons";
+import "boxicons/css/boxicons.min.css";
 
 const Card = ({ isOverdue, index, listIndex, card, lists, setLists, handleEditCard }) => {
     const [, drag] = useDrag({
@@ -10,24 +12,18 @@ const Card = ({ isOverdue, index, listIndex, card, lists, setLists, handleEditCa
     const [, drop] = useDrop({
         accept: 'CARD',
         hover: (item) => {
-            // If the card is dragged within the same list or across lists
             if (item.index !== index || item.listIndex !== listIndex) {
                 moveCard(item.index, index, listIndex, item.listIndex);
                 item.index = index;
-                item.listIndex = listIndex; // Update the dragged item's listIndex
+                item.listIndex = listIndex; 
             }
         },
     });
 
     const moveCard = (dragIndex, hoverIndex, targetListIndex, draggedListIndex) => {
         const updatedLists = [...lists];
-
-        // Remove the card from its original position
         const draggedCard = updatedLists[draggedListIndex].cards.splice(dragIndex, 1)[0];
-
-        // Insert the card into its new position
         updatedLists[targetListIndex].cards.splice(hoverIndex, 0, draggedCard);
-
         setLists(updatedLists);
     };
 

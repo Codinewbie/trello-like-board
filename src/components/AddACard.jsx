@@ -10,13 +10,12 @@ const AddACard = ({lists , setLists , index}) => {
    const [cardDetails, setCardDetails] = useState([]);
 
    const handleAddCardClick = () => {
-        setIsAddingCard(true); // Show input field when "Add a list" is clicked
+        setIsAddingCard(true); 
     };
 
     const handleKeyPress = (e) => {
-        // Check if the Enter key (key code 13) is pressed
         if (e.key === 'Enter') {
-          handleSaveCard(); // Trigger the button click handler
+          handleSaveCard(); 
         }
       };
     const handleSaveCard = () => {
@@ -30,9 +29,8 @@ const AddACard = ({lists , setLists , index}) => {
     };
     const handleCancel = () => {
         setCardDetails([]);
-        setIsAddingCard(false); // Hide the input field and reset
+        setIsAddingCard(false);
     };
-
    
   return (  
     <React.Fragment>
@@ -46,7 +44,7 @@ const AddACard = ({lists , setLists , index}) => {
             >
                 <box-icon
                     name="plus"
-                    color={isHovered ? "indigo" : "gray"} // Change color based on hover state
+                    color={isHovered ? "indigo" : "gray"}
                 ></box-icon>
                 <div className="text-sm font-semibold">Add a card</div>
             </button>

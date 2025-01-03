@@ -24,7 +24,7 @@ const Header = ({setLists}) => {
           <a className="flex justify-start items-center space-x-2 p-1  " href="https://codinewbie.github.io/portfolio/" title="portfolio" target="_blank" rel="noopener noreferrer">
               <div className="h-8 w-8 bg-gray-100 absolute   text-center flex justify-center  items-center rounded-full z-20 " >
                       <img
-                          src={aman2} // Path relative to the public folder
+                          src={aman2} 
                           alt="aman image"
                           className="object-cover rounded-full grayscale"
                       />
